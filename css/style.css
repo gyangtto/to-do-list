@@ -1,15 +1,64 @@
 body {
   margin: 0;
-  background-image: url("../img/bgi.jpg");
+  background-image: url("../img/paper-img.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  font-size: 14px;
 }
 
-.container {
-  height: 100vh;
+button, 
+input{
+  border: none;
+  outline: none;
+  background: none;
+}
+
+main{
+  height: 500px;
+}
+
+main .container {
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
+
+#top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+}
+
+.h1-txt{
+  text-align: center;
+  font-weight: 800;
+}
+
+.date-container{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-container p{ 
+  margin: 0;
+}
+
+.day {
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.month {
+  /* height: 15px; */
+  font-size: 1.25rem;
+}
+
+
+.year{
+  color: #666;
+}
+
 
 .task-area {
   border: 1px solid lightgray;
@@ -17,27 +66,122 @@ body {
 
 .task-tabs {
   display: flex;
-  gap: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
   position: relative;
   border-bottom: 1px solid lightgray;
+  /* transform: 0.5s ease-in; */
 }
 
-.task-tabs div {
+.task-tabs div{
   padding: 1em;
+  cursor:pointer;
 }
 
-#under-line {
-  width: 80px;
-  height: 4px;
-  position: absolute;
-  left: 0;
-  top: 52px;
-  background-color: pink;
+#task-underline {
+  /* width: var(); */
+  opacity: 0;
+  /* height: 4px; */
   padding: 0;
+  position: absolute;
+  /* left: 0; javscript로 지정 */
+  background-color: rgba(0, 0, 0, .08);
+  /* transition: left 0.5s ease-in; */
+}
+
+#task-board{
+  height: 300px;
+}
+
+#task-board i{
+  margin-top: 3px;
+  font-size: 20px;
+  color: #000;
+}
+
+#task-board button:hover > i, 
+#task-board button:active > i {
+  color:rgba(0, 0, 0, .2);
 }
 
 .task {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1em;
+}
+
+.task-txt{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.task-done {
+  text-decoration: line-through;
+}
+
+@keyframes fade_in {
+  0%, 10% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  30%, 100% {
+    opacity: 1;
+    transform:scale(1);
+  }
+}
+
+@keyframes fade_out {
+  0%, 10% {
+    opacity: 1;
+    transform:scale(1);
+  }
+  30%, 100% {
+    opacity: 0;
+    transform:scale(0);
+  }
+}
+
+.input-area {
+  display: none;
+  opacity: 0;
+  animation: fade_in 1s ease-out;
+}
+
+.input-area.visible {
+  display: block;
+  opacity: 1;
+}
+
+#task-input{
+  background-color: #eee;
+  border-radius: 20px;
+  padding: 8px 0 8px 14px;
+  /* padding-left: 20px; */
+  margin: 5px;
+}
+
+#start-btn {
+  margin: 5px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 800;
+  background-color: #eee;
+}
+
+#start-btn.hidden{
+  opacity: 0;
+  animation: fade_out 1s ease-in;
+}
+
+
+#add-btn{
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+#add-btn:active,
+#add-btn:hover{
+  background-color: #eee;
 }
