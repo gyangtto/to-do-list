@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400 800 900;
+  font-style: normal;
+}
+
 body {
   height: 100vh;
   margin: 0;
@@ -100,6 +107,15 @@ main .container {
   margin-top: 3px;
   font-size: 20px;
   color: #000;
+}
+
+.no-tasks h5 {
+  font-weight: 800;
+  color: #222;
+}
+
+.no-tasks {
+  color: #dedede;
 }
 
 #task-board button:hover > i, 

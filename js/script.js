@@ -29,6 +29,7 @@ window.onload = function () {
   taskUnderline.style.left = initialTab.offsetLeft + 'px';
   taskUnderline.style.width = initialTab.offsetWidth + 'px';
   taskUnderline.style.height = initialTab.offsetHeight + 'px';
+  render();
 };
 
 // 현재 날짜를 가져오는 함수
@@ -153,9 +154,11 @@ function render() {
 
   // 현재 선택된 탭에 따라 리스트를 구성합니다.
   if (mode === 'all') {
-    list = taskList; // 모든 할일을 보여줍니다.
-  } else if (mode === 'on_going' | mode === 'done') {
-    list = filterList; // 필터링된 할일만 보여줍니다.
+    list = taskList;
+  } else if (mode === 'on_going') {
+    list = taskList.filter(task => !task.isComplete); // 진행 중인 할일만 필터링
+  } else if (mode === 'done') {
+    list = taskList.filter(task => task.isComplete); // 완료된 할일만 필터링
   }
 
   let resultHTML = ''; // 화면에 출력할 HTML을 저장할 변수입니다.
@@ -164,25 +167,13 @@ function render() {
   if (list.length === 0) {
     // 기본 메모를 HTML 문자열로 추가
     resultHTML += `
-<div class="task">
-  <div class="task-txt">
-    <button onclick="toggleComplete('no-task-id')">
-      <i id="task-check" class="fa-regular fa-square"></i>
-    </button>
+<div id ="no-task-area" class="task">
+  <div class="no-task-txt">
     <!-- 기본 메모 내용 -->
-    <div class="no-tasks">Note to Self <br />진짜 문제는 사람들의 마음이다. <br />
+    <div class="no-tasks"><h5>Note to Self</h5></div>
+    <div>진짜 문제는 사람들의 마음이다. <br />
       그것은 절대로 물리학이나 윤리학의 문제가 아니다. <br />
       -아인슈타인</div>
-  </div>
-  <div>
-    <!-- 기본 메모 편집 버튼 -->
-    <button onclick="editTask('no-task-id')">
-      <i id="task-edit" class="fa-solid fa-pen-to-square"></i>
-    </button>
-    <!-- 기본 메모 삭제 버튼 -->
-    <button onclick="deleteTask('no-task-id')">
-      <i id="task-delete" class="fa-solid fa-trash"></i>
-    </button>
   </div>
 </div>
 `;
@@ -238,37 +229,70 @@ function render() {
   document.getElementById('task-board').innerHTML = resultHTML;
 }
 
-// 완료 토글 함수
-function toggleComplete(id) {
-  for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].id == id) {
-      taskList[i].isComplete = !taskList[i].isComplete;
-      break;
-    }
-  }
-  render()
-}
-
-// 할일 수정하는 함수
 function editTask(id) {
-  let taskToEdit = taskList.find(task => task.id === id);
-  let editInput = prompt('할 일을 수정하세요:', taskToEdit.taskContents);
-  if (editInput !== null) {
-    taskToEdit.taskContents = editInput;
-    render();
+  if (id === 'no-task-id') {
+    // 기본 메모 수정
+    const newTaskContents = prompt('할 일을 수정하세요:', document.querySelector('.no-tasks').textContent.trim());
+    if (newTaskContents !== null) {
+      document.querySelector('.no-tasks').textContent = newTaskContents;
+    }
+  } else {
+    // 일반 할일 수정
+    const task = taskList.find(task => task.id === id);
+    if (task) {
+      const newTaskContents = prompt('할 일을 수정하세요:', task.taskContents);
+      if (newTaskContents !== null) {
+        task.taskContents = newTaskContents;
+        render(); // 수정 후 목록 다시 렌더링
+      }
+    }
   }
 }
 
-// 할일 삭제하는 함수
+// 할일 삭제 함수
 function deleteTask(id) {
-  for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].id == id) {
-      taskList.splice(i, 1);
-      break;
+  if (id === 'no-task-id') {
+    // 기본 메모 삭제
+    document.querySelector('#no-task-area').remove(); // 해당 요소를 삭제
+  } else {
+    // 일반 할일 삭제
+    const index = taskList.findIndex(task => task.id === id);
+    if (index !== -1) {
+      taskList.splice(index, 1);
+      render(); // 삭제 후 목록 다시 렌더링
     }
   }
-  render();
 }
+// 할일을 완료 또는 미완료로 토글하는 함수
+function toggleComplete(id) {
+  const task = taskList.find(task => task.id === id);
+  if (task) {
+    if (id === 'no-task-id') {
+      // 기본 메모의 완료 상태를 토글합니다.
+      task.isComplete = !task.isComplete;
+      if (mode === 'on_going' && task.isComplete) {
+        // 진행 중인 항목에서 완료된 항목은 filterList에서 제외합니다.
+        const index = filterList.findIndex(taskItem => taskItem.id === id);
+        if (index !== -1) {
+          filterList.splice(index, 1);
+        }
+      }
+      render(); // 변경된 상태로 목록 다시 렌더링
+    } else {
+      // 일반 할일의 완료 상태를 토글하고 완료된 상태에서 on_going 탭에 있을 때 숨깁니다.
+      task.isComplete = !task.isComplete;
+      if (mode === 'on_going' && task.isComplete) {
+        // 진행 중인 항목에서 완료된 항목은 filterList에서 제외합니다.
+        const index = filterList.findIndex(taskItem => taskItem.id === id);
+        if (index !== -1) {
+          filterList.splice(index, 1);
+        }
+      }
+      render(); // 변경된 상태로 목록 다시 렌더링
+    }
+  }
+}
+
 
 // 탭 필터링 함수
 function filter(event) {
@@ -308,3 +332,15 @@ function randomIDGenerate() {
 taskInput.addEventListener('focus', function () {
   taskInput.value = '';
 })
+
+// 여기서 문제
+// on_going 내에서 수정 버튼, 삭제 버튼 실행 안됨
+// on_going 내에서 토글 버튼 체크 시 display : none; 처리가 되어야 함 (왜냐하면 on_going 은 현재 진행중인 task만 보이도록 해야 함)
+// 주어진 코드에서 진행 중인 할일과 완료된 할일을 구분하여 보여주는 점 중요
+// 또한 수정 및 삭제 버튼이 올바르게 동작해야 함
+// 1. 진행 중인 할일과 완료된 할일을 구분하여 보여주는 기능을 추가
+// 이를 위해 render() 함수에서 filterList를 사용하여 목록을 필터링
+// 2. 수정 및 삭제 버튼이 해당 할일에 대해서만 동작하도록 수정해야 함
+// 이를 위해 editTask() 및 deleteTask() 함수를 수정
+// 3. 진행 중인 할일에서는 토글 버튼을 클릭했을 때 완료된 할일로 처리되어서는 안 됨
+// 토글 버튼을 클릭할 때 해당 버튼이 속한 할일만 처리되도록 수정
