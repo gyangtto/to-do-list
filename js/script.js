@@ -173,7 +173,7 @@ function render() {
     </div>
     <div>
     <button onclick="editTask('${list[i].id}')">
-    <i id="task-edit" class="fa-solid fa-trash"></i>
+    <i id="task-edit" class="fa-solid fa-pen-to-square"></i>
     </button>
       <button onclick="deleteTask('${list[i].id}')">
       <i id="task-delete" class="fa-solid fa-trash"></i>
