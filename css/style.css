@@ -1,6 +1,7 @@
 body {
+  height: 100vh;
   margin: 0;
-  background-image: url("../img/paper-img.jpg");
+  /* background-image: url("../img/paper-img.jpg"); */
   background-repeat: no-repeat;
   background-size: cover;
   font-size: 14px;
@@ -14,7 +15,9 @@ input{
 }
 
 main{
-  height: 500px;
+  display: grid;
+  place-items: center;
+  height: 100vh;
 }
 
 main .container {
