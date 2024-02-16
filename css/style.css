@@ -103,6 +103,25 @@ main .container {
   overflow-y: scroll;
 }
 
+#task-board::-webkit-scrollbar {
+  width: 10px;
+}
+
+#task-board::-webkit-scrollbar-button{
+  background-color: #fff;
+  height: 3%;
+  border-radius: 10px;
+}
+
+#task-board::-webkit-scrollbar-thumb {
+background-color: #eee;
+border-radius: 10px;
+}
+
+#task-board::-webkit-scrollbar-track {
+  background-color: rgba(255,255,255, .1);
+}
+
 #task-board i{
   margin-top: 3px;
   font-size: 20px;
