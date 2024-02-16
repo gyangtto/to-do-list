@@ -60,12 +60,14 @@ function displayCurrentDate() {
 
   // 생성된 HTML을 화면에 추가
   dateHTML += `
-      <div class="date-container">
+      <div class="date-area">
+      <section class="date-container">
         <p class="day">${date.slice(5)}</p>
         <div class="day-year">
         <p class="month">${date.slice(1,4)}</p>
         <p class="year">${year}</p>
         </div>
+      </section>
       </div>
       `;
 

@@ -55,20 +55,24 @@ main .container {
 }
 
 .day {
-  font-size: 48px;
-  font-weight: 600;
+  font-size: 3rem;
+  font-weight: 800;
 }
 
 .month {
   /* height: 15px; */
   font-size: 1.25rem;
+  font-weight: 600;
 }
-
 
 .year{
   color: #666;
 }
 
+.today-weekday{
+  font-size: 2rem;
+  font-weight: 600;
+}
 
 .task-area {
   border: 1px solid lightgray;
@@ -161,6 +165,10 @@ border-radius: 10px;
   text-decoration: line-through;
 }
 
+.input i{
+  color: #000;
+}
+
 @keyframes fade_in {
   0%, 10% {
     opacity: 0;
@@ -200,16 +208,17 @@ border-radius: 10px;
   border-bottom: 3px solid #eee;
   /* border-radius: 20px; */
   padding: 8px 10px;
-  /* padding-left: 20px; */
   margin: 5px;
+  color: #000;
 }
 
 #start-btn {
   margin: 5px;
   padding: 8px 14px;
-  border-radius: 20px;
+  border-radius: 50%;
   font-weight: 800;
   background-color: #eee;
+  color: #000;
 }
 
 #start-btn.hidden{
