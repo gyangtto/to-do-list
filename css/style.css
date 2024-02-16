@@ -99,7 +99,7 @@ main .container {
 }
 
 #task-board{
-  height: 328px;
+  height: 276px;
   overflow-y: scroll;
 }
 
@@ -190,14 +190,16 @@ border-radius: 10px;
 }
 
 .input-area.visible {
-  display: block;
+  display: flex;
+  flex-direction: column;
   opacity: 1;
 }
 
 #task-input{
-  background-color: #eee;
-  border-radius: 20px;
-  padding: 8px 0 8px 14px;
+  /* background-color: #eee; */
+  border-bottom: 3px solid #eee;
+  /* border-radius: 20px; */
+  padding: 8px 10px;
   /* padding-left: 20px; */
   margin: 5px;
 }
